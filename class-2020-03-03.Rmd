@@ -1,0 +1,28 @@
+---
+title: "Class Enrollment"
+author: "Jessica Wu"
+date: "3/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(readxl)
+library(googlesheets4)
+library(fs)
+```
+
+```{r}
+
+url_old <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_3.22.19_0.xlsx"
+
+download.file(url_old, destfile = "old.xlsx")
+
+url_current <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_2.25.20_0.xlsx"
+
+download.file(url_current, destfile = "current.xlsx")
+
+```
+
