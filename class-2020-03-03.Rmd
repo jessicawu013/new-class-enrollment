@@ -12,6 +12,7 @@ library(readr)
 library(readxl)
 library(googlesheets4)
 library(fs)
+library(janitor)
 ```
 
 ```{r}
@@ -23,6 +24,22 @@ download.file(url_old, destfile = "old.xlsx")
 url_current <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_2.25.20_0.xlsx"
 
 download.file(url_current, destfile = "current.xlsx")
+
+current <- read_excel("current.xlsx", skip = 3) %>%
+  clean_names() %>%
+  filter(! is.na(course_name))
+
+old <- read_excel("old.xlsx", skip = 3) %>%
+  clean_names() %>%
+  filter(! is.na(course_name)) %>%
+  select(course_id)
+
+x <- anti_join(current, old, by = "course_id")
+
+x %>%
+  arrange(desc(total)) %>% 
+  select(course_name, total) %>% 
+  slice(1:5)
 
 ```
 
